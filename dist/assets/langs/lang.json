@@ -1,0 +1,22 @@
+{
+  "es-ES": {
+    "TITLE": "¡ATRAPA LA FRUTA!",
+    "GAME_OVER_TITLE": "Fin de partida",
+    "UI_START_MESSAGE": "Presiona ESPACIO para empezar",
+    "UI_SCORE": "Puntuación: ",
+    "UI_TUTORIAL": "Utiliza las flechas izquierda / derecha para moverte",
+    "UI_HIGHSCORE": "Puntuación máxima: ",
+    "UI_NEW_HIGHSCORE": "¡Nuevo récord!: ",
+    "UI_RESTART": "¿Probar de nuevo? (Presiona ESPACIO)"
+  },
+  "en-EN": {
+    "TITLE": "CATCH THE FRUIT!",
+    "GAME_OVER_TITLE": "Game Over",
+    "UI_START_MESSAGE": "Press SPACE to start",
+    "UI_SCORE": "Score:",
+    "UI_TUTORIAL": "Use left / right arrow keys to move",
+    "UI_HIGHSCORE": "High score: ",
+    "UI_NEW_HIGHSCORE": "New highscore!: ",
+    "UI_RESTART": "Try again? (Press SPACE)"
+  }
+}
