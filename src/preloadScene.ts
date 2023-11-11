@@ -105,7 +105,7 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   startMainMenuScene(){
-    this.scene.start("gameScene")
+    this.scene.start("mainMenu")
   }
 
   loadFont(name, url) {
