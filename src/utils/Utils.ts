@@ -16,7 +16,6 @@ export default class Utils {
     }
 
     getCurrentLang(): string {
-        console.log(this.scene.cache.json.get('gameConfig'))
        return this.scene.cache.json.get('gameConfig').currentLang
     }
 

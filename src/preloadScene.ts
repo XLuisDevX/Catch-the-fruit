@@ -72,7 +72,6 @@ export default class PreloadScene extends Phaser.Scene {
       this.scene.loadBar(value)
     })
     this.load.on("complete", function () {
-      console.log('current lang: ', this.scene.cache.json.get('gameConfig').currentLang)
       this.scene.startMainMenuScene()
     });
   }
