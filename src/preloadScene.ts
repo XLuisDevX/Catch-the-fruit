@@ -43,6 +43,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("orange", "assets/images/orange.png")
     this.load.image("pineapple", "assets/images/pineapple.png")
     this.load.image("lemon", "assets/images/lemon.png")
+    this.load.image("es-ES", "assets/images/es-ES.png")
+    this.load.image("en-EN", "assets/images/en-EN.png")
 
     this.load.json('lang', 'assets/langs/lang.json')
     this.load.json('gameConfig', 'data/gameData.json')
@@ -70,6 +72,7 @@ export default class PreloadScene extends Phaser.Scene {
       this.scene.loadBar(value)
     })
     this.load.on("complete", function () {
+      console.log('current lang: ', this.scene.cache.json.get('gameConfig').currentLang)
       this.scene.startMainMenuScene()
     });
   }
@@ -77,7 +80,6 @@ export default class PreloadScene extends Phaser.Scene {
   create() {
     this.utils = new Utils(this)
     this.add.text(this.game.scale.width/2, this.game.scale.height/2-20, "Loading...").setOrigin(.5);
-    this.utils.updateGameLang()
   }
 
   createLoadingBar(){

@@ -13,6 +13,7 @@ export default class GameOverScene extends Phaser.Scene {
   private highScore: number = +localStorage.getItem("score")
     ? +localStorage.getItem("score")
     : 0;
+  private lang: string
 
   constructor() {
     super({ key: "gameOverScene" });
@@ -26,6 +27,8 @@ export default class GameOverScene extends Phaser.Scene {
       this.game_over_sounds.game_over = this.sound.add("game_over");
       this.game_over_sounds.keyPressed = this.sound.add("key_pressed");
     }
+
+    this.lang = this.utils.getCurrentLang()
 
     this.createBackground();
     this.createGameOverText(data.score);
@@ -60,7 +63,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.game.scale.width / 2,
         this.game.scale.height / 2 - 150,
         this.localizationManager.getTranslationByLocalizationId(
-          "GAME_OVER_TITLE"
+          "GAME_OVER_TITLE", this.lang
         ),
         {
           fontFamily: "retroGaming",
@@ -76,7 +79,7 @@ export default class GameOverScene extends Phaser.Scene {
       .text(
         this.game.scale.width / 2,
         this.game.scale.height / 2,
-        this.localizationManager.getTranslationByLocalizationId("UI_SCORE") +
+        this.localizationManager.getTranslationByLocalizationId("UI_SCORE", this.lang) +
           score,
         {
           fontFamily: "retroGaming",
@@ -94,7 +97,7 @@ export default class GameOverScene extends Phaser.Scene {
           this.game.scale.width / 2,
           this.game.scale.height / 2 + 50,
           this.localizationManager.getTranslationByLocalizationId(
-            "UI_NEW_HIGHSCORE"
+            "UI_NEW_HIGHSCORE", this.lang
           ) + score,
           {
             fontFamily: "retroGaming",
@@ -116,7 +119,7 @@ export default class GameOverScene extends Phaser.Scene {
           this.game.scale.width / 2,
           this.game.scale.height / 2 + 50,
           this.localizationManager.getTranslationByLocalizationId(
-            "UI_HIGHSCORE"
+            "UI_HIGHSCORE", this.lang
           ) + highScore,
           {
             fontFamily: "retroGaming",
@@ -135,14 +138,15 @@ export default class GameOverScene extends Phaser.Scene {
       .text(
         this.game.scale.width / 2,
         this.game.scale.height - 100,
-        this.localizationManager.getTranslationByLocalizationId("UI_RESTART"),
+        this.localizationManager.getTranslationByLocalizationId("UI_RESTART", this.lang),
         {
           fontFamily: "retroGaming",
           fontSize: "20px",
           color: "#ffff00",
           stroke: "#000000",
           strokeThickness: 4,
-          wordWrap: {width: this.game.scale.width}
+          wordWrap: {width: this.game.scale.width},
+          align: "center"
         }
       )
       .setOrigin(0.5);

@@ -8,6 +8,7 @@ export default class Game extends Phaser.Scene {
   private background: Phaser.GameObjects.Image;
   private player: any;
   private fruitSpawner: Phaser.Time.TimerEvent;
+  public fruitsRandomPositions: Array<number> = []
   private fruits: any[];
   private scoreText: Phaser.GameObjects.Text;
   private tutorialText: Phaser.GameObjects.Text;
@@ -20,8 +21,11 @@ export default class Game extends Phaser.Scene {
   private sizer: any;
   private game_sounds: any = {};
   private isNewGame: boolean = true;
+  private lang: string
 
   private SPAWN_TIME: number = 3000;
+  private SPAWN_MARGIN_LEFT: number
+  private SPAWN_MARGIN_RIGHT: number
 
   constructor() {
     super({ key: "gameScene" });
@@ -55,6 +59,10 @@ export default class Game extends Phaser.Scene {
       this
     );
     this.utils = new Utils(this)
+    this.SPAWN_MARGIN_LEFT = 50
+    this.SPAWN_MARGIN_RIGHT = this.scale.gameSize.width - 50
+    this.lang = this.utils.getCurrentLang()
+    this.fruitsRandomPositions = this.utils.generateRandomPositions(this.SPAWN_MARGIN_LEFT, this.SPAWN_MARGIN_RIGHT)
     this.createGraphics();
     this.attachEvents();
     this.showTutorial();
@@ -118,7 +126,7 @@ export default class Game extends Phaser.Scene {
           this.game.scale.width / 2,
           this.game.scale.height / 2,
           this.localizationManager.getTranslationByLocalizationId(
-            "UI_TUTORIAL",
+            "UI_TUTORIAL", this.lang
           ),
           {
             fontFamily: "retroGaming",
@@ -144,10 +152,12 @@ export default class Game extends Phaser.Scene {
       let rndFruit = Phaser.Math.Between(0, this.fruits.length - 1);
       const fruitSelected = this.fruits[rndFruit];
 
-      const randomRangeX = Phaser.Math.Between(
-        0 + fruitSelected.width / 2,
-        this.game.scale.width - fruitSelected.width / 2
-      );
+      // const randomRangeX = Phaser.Math.Between(
+      //   0 + fruitSelected.width / 2,
+      //   this.game.scale.width - fruitSelected.width / 2
+      // );
+      const randomIndex = Math.floor(Math.random() * this.fruitsRandomPositions.length)
+      const randomRangeX = this.fruitsRandomPositions[randomIndex]
       // Reset physics from the object
       fruitSelected.x = randomRangeX;
       fruitSelected.y = 0 - fruitSelected.height / 2;
@@ -189,7 +199,7 @@ export default class Game extends Phaser.Scene {
     this.score += fruit.score;
     this.scoreText.setText(
       this.localizationManager.getTranslationByLocalizationId(
-        "UI_SCORE",
+        "UI_SCORE", this.lang
       ) + this.score
     );
     this.game_sounds.collect.play();
@@ -249,7 +259,7 @@ export default class Game extends Phaser.Scene {
     this.scoreText = this.add.text(
       this.scoreTextMarginX,
       this.scoreTextMarginY,
-      this.localizationManager.getTranslationByLocalizationId("UI_SCORE"),
+      this.localizationManager.getTranslationByLocalizationId("UI_SCORE", this.lang),
       {
         fontFamily: "retroGaming",
         fontSize: "18px",
@@ -258,7 +268,7 @@ export default class Game extends Phaser.Scene {
         strokeThickness: 4,
       }
     );
-    this.scoreText.setText(this.localizationManager.getTranslationByLocalizationId("UI_SCORE") + this.score);
+    this.scoreText.setText(this.localizationManager.getTranslationByLocalizationId("UI_SCORE", this.lang) + this.score);
   }
 
   endGame() {

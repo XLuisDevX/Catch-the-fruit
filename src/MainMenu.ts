@@ -1,7 +1,10 @@
 import * as Phaser from "phaser";
 import { KEY_NAMES } from "./const";
 import LocalizationManager from "./utils/LocalizationManager";
+import Utils from "./utils/Utils";
+
 export default class MainMenu extends Phaser.Scene {
+  utils: Utils
   background: Phaser.GameObjects.Image;
   playerImg: Phaser.GameObjects.Sprite;
   keyPressed: any;
@@ -9,6 +12,10 @@ export default class MainMenu extends Phaser.Scene {
   lang: string;
   claimTween: Phaser.Tweens.Tween;
   gameConfig: any;
+  langFlag: Phaser.GameObjects.Image
+  gameTitle: Phaser.GameObjects.Text
+  startText: Phaser.GameObjects.Text
+
 
   constructor() {
     super({
@@ -18,15 +25,16 @@ export default class MainMenu extends Phaser.Scene {
 
   init(): void {
     this.keyPressed = this.sound.add("key_pressed");
-    this.lang = this.getLanguage();
   }
 
   create(): void {
+    this.utils = new Utils(this)
     this.localizationManager = this.localizationManager =
       new LocalizationManager(this);
     this.gameConfig = this.cache.json.get("gameConfig");
-    console.log(this.gameConfig);
+    this.lang = this.utils.getCurrentLang()
     this.createBackground();
+    this.createLangFlag();
     this.createTexts();
     this.attachEvents();
   }
@@ -68,11 +76,11 @@ export default class MainMenu extends Phaser.Scene {
       }
     ).setOrigin(1,0.5);
 
-    this.add
+    this.gameTitle =  this.add
       .text(
         this.game.scale.width / 2,
         this.game.scale.height / 2 - 150,
-        this.localizationManager.getTranslationByLocalizationId("TITLE"),
+        this.localizationManager.getTranslationByLocalizationId("TITLE", this.lang),
         {
           fontFamily: "retroGaming",
           fontSize: "24px",
@@ -83,12 +91,13 @@ export default class MainMenu extends Phaser.Scene {
       )
       .setOrigin(0.5);
 
-    let startText = this.add
+    this.startText = this.add
       .text(
         this.game.scale.width / 2,
-        this.game.scale.height - 100,
+        this.game.scale.height / 2 + 100,
         this.localizationManager.getTranslationByLocalizationId(
-          "UI_START_MESSAGE"
+          "UI_START_MESSAGE",
+          this.lang
         ),
         {
           fontFamily: "retroGaming",
@@ -103,7 +112,7 @@ export default class MainMenu extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.claimTween = this.tweens.add({
-      targets: startText,
+      targets: this.startText,
       alpha: { from: 0, to: 1 },
       duration: 1000,
       repeat: -1,
@@ -111,13 +120,22 @@ export default class MainMenu extends Phaser.Scene {
     });
   }
 
+  createLangFlag() {
+    this.langFlag = this.add.image(35, this.game.scale.height - 15, this.getCurrentLangFlag()).setOrigin(0.5)
+    this.langFlag.setInteractive({cursor: 'pointer'})
+    this.langFlag.on('pointerdown', () => {
+      this.utils.updateGameLang(this.lang)
+      this.updateGameTexts()
+      this.updateFlagTexture()
+    })
+  }
+
+  getCurrentLangFlag(): string {
+    return this.cache.json.get('gameConfig').currentLang
+  }
+
   getLanguage(): string {
-    let url = new URL(window.location.href);
-    let defaultLang = navigator.language ? navigator.language : "en-EN";
-    let language = url.searchParams.get("lang")
-      ? url.searchParams.get("lang")
-      : defaultLang;
-    return language;
+    return this.cache.json.get('gameConfig').currentLang;
   }
 
   startGameScene() {
@@ -126,5 +144,16 @@ export default class MainMenu extends Phaser.Scene {
     } else {
       this.scene.start("gameScene");
     }
+  }
+
+  updateFlagTexture(){
+    this.langFlag.setTexture(this.getCurrentLangFlag())
+  }
+
+  updateGameTexts() {
+    this.utils.updateGameLang(this.lang)
+    this.lang = this.cache.json.get('gameConfig').currentLang
+    this.gameTitle.setText(this.localizationManager.getTranslationByLocalizationId('TITLE', this.lang))
+    this.startText.setText(this.localizationManager.getTranslationByLocalizationId('UI_START_MESSAGE', this.lang))
   }
 }

@@ -13,7 +13,7 @@
     "TITLE": "CATCH THE FRUIT!",
     "GAME_OVER_TITLE": "Game Over",
     "UI_START_MESSAGE": "Press SPACE to start",
-    "UI_SCORE": "Score:",
+    "UI_SCORE": "Score: ",
     "UI_TUTORIAL": "Use left / right arrow keys to move",
     "UI_HIGHSCORE": "High score: ",
     "UI_NEW_HIGHSCORE": "New highscore!: ",

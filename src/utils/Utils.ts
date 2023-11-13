@@ -1,4 +1,4 @@
-
+const LANGS = ['es-ES', 'en-EN']
 
 export default class Utils {
     scene: Phaser.Scene
@@ -15,8 +15,36 @@ export default class Utils {
         return newFontSize.toString() + 'px'
     }
 
-    updateGameLang(): void {
-        let lang = navigator.language
-        this.scene.cache.json.get('gameConfig').currentLanguage = lang
+    getCurrentLang(): string {
+        console.log(this.scene.cache.json.get('gameConfig'))
+       return this.scene.cache.json.get('gameConfig').currentLang
+    }
+
+    updateGameLang(lang: string): void {
+        let lang_ = ''
+        if(lang === LANGS[0]){
+            lang_ = LANGS[1]
+        } else {
+            lang_ = LANGS[0]
+        }
+        this.scene.cache.json.get('gameConfig').currentLang = lang_
+    }
+
+    generateRandomPositions(min, max): Array<number> {
+        if (min > max) {
+            [min, max] = [max, min];
+        }
+
+        const positions = [];
+        for (let i = min; i <= max; i++) {
+            positions.push(i);
+        }
+
+        for (let i = positions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [positions[i], positions[j]] = [positions[j], positions[i]];
+        }
+
+        return positions;
     }
 }
