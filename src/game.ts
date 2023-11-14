@@ -92,11 +92,14 @@ export default class Game extends Phaser.Scene {
     });
 
     this.time.addEvent({
-      delay: 3000,
+      delay: 1500,
       callback: () => {
-        if (this.SPAWN_TIME >= 1000 && !this.isNewGame)
-          this.SPAWN_TIME -= this.score * 0.2;
-        this.objVelocity += 50 * 0.25;
+        if (this.SPAWN_TIME >= 500 && !this.isNewGame){
+          this.SPAWN_TIME -= this.score * 0.5;
+          this.objVelocity += 50 * 0.35;
+        } else if(this.SPAWN_TIME <= 500) {
+          this.objVelocity += 50 * 0.35
+        }
       },
       loop: true,
     });
@@ -152,15 +155,11 @@ export default class Game extends Phaser.Scene {
       let rndFruit = Phaser.Math.Between(0, this.fruits.length - 1);
       const fruitSelected = this.fruits[rndFruit];
 
-      // const randomRangeX = Phaser.Math.Between(
-      //   0 + fruitSelected.width / 2,
-      //   this.game.scale.width - fruitSelected.width / 2
-      // );
       const randomIndex = Math.floor(Math.random() * this.fruitsRandomPositions.length)
       const randomRangeX = this.fruitsRandomPositions[randomIndex]
       // Reset physics from the object
       fruitSelected.x = randomRangeX;
-      fruitSelected.y = 0 - fruitSelected.height / 2;
+      fruitSelected.y = -50 - fruitSelected.height / 2;
       fruitSelected.body.velocity.reset();
       fruitSelected.body.allowGravity = true;
       fruitSelected.body.gravity.y = this.objVelocity;
