@@ -7,7 +7,8 @@
     "UI_TUTORIAL": "Utiliza las flechas izquierda / derecha para moverte",
     "UI_HIGHSCORE": "Puntuación máxima: ",
     "UI_NEW_HIGHSCORE": "¡Nuevo récord!: ",
-    "UI_RESTART": "¿Probar de nuevo? (Presiona ESPACIO)"
+    "UI_RESTART": "¿Probar de nuevo? (Presiona ESPACIO)",
+    "UI_RETURN_MAIN_MENU": "Pulsa ESC para volver al menú principal"
   },
   "en-EN": {
     "TITLE": "CATCH THE FRUIT!",
@@ -17,6 +18,7 @@
     "UI_TUTORIAL": "Use left / right arrow keys to move",
     "UI_HIGHSCORE": "High score: ",
     "UI_NEW_HIGHSCORE": "New highscore!: ",
-    "UI_RESTART": "Try again? (Press SPACE)"
+    "UI_RESTART": "Try again? (Press SPACE)",
+    "UI_RETURN_MAIN_MENU": "Press ESC to return main menu"
   }
 }

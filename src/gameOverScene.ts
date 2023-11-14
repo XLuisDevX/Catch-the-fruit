@@ -43,6 +43,13 @@ export default class GameOverScene extends Phaser.Scene {
         this.restartGame();
       }
     });
+    this.input.keyboard.on("keydown", (event) => {
+      if (event.code === KEY_NAMES.ESCAPE) {
+        this.game_over_sounds.keyPressed.play();
+        this.returnMainMenu();
+      }
+    })
+
     this.tryAgainText.on(Phaser.Input.Events.POINTER_DOWN, () => {
       this.restartGame();
     });
@@ -80,7 +87,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.game.scale.width / 2,
         this.game.scale.height / 2,
         this.localizationManager.getTranslationByLocalizationId("UI_SCORE", this.lang) +
-          score,
+        score,
         {
           fontFamily: "retroGaming",
           fontSize: "20px",
@@ -137,7 +144,7 @@ export default class GameOverScene extends Phaser.Scene {
     this.tryAgainText = this.add
       .text(
         this.game.scale.width / 2,
-        this.game.scale.height - 100,
+        this.game.scale.height/2 + 200,
         this.localizationManager.getTranslationByLocalizationId("UI_RESTART", this.lang),
         {
           fontFamily: "retroGaming",
@@ -145,7 +152,7 @@ export default class GameOverScene extends Phaser.Scene {
           color: "#ffff00",
           stroke: "#000000",
           strokeThickness: 4,
-          wordWrap: {width: this.game.scale.width},
+          wordWrap: { width: this.game.scale.width },
           align: "center"
         }
       )
@@ -160,14 +167,24 @@ export default class GameOverScene extends Phaser.Scene {
     });
 
     this.tryAgainText.setInteractive({ cursor: "pointer" });
+
+    this.add.text(this.scale.width / 2, this.scale.height - 100, this.localizationManager.getTranslationByLocalizationId("UI_RETURN_MAIN_MENU", this.lang),
+      {
+        fontFamily: "retroGaming",
+        fontSize: "14px",
+        color: "#ffff00",
+        stroke: "#000000",
+        strokeThickness: 4,
+        wordWrap: { width: this.game.scale.width },
+        align: "center"
+      }).setOrigin(0.5)
   }
 
   restartGame(): void {
-    this.scene.sleep("gameOverScene")
-    if(this.scene.isSleeping("gameScene")){
-      this.scene.wake("gameScene")
-    } else {
-      this.scene.launch("gameScene");
-    }
+    this.scene.start("gameScene")
+  }
+
+  returnMainMenu(): void {
+    this.scene.start("mainMenu")
   }
 }
