@@ -169,10 +169,10 @@ export default class Game extends Phaser.Scene {
 
   update() {
     if (!this.isGameOver) {
-      if (this.player.controls.left.isDown) {
+      if (this.player.controls.left.isDown && (this.player.x - this.player.width / 2) > 0) {
         this.player.x -= 4;
       }
-      if (this.player.controls.right.isDown) {
+      if (this.player.controls.right.isDown && (this.player.x + this.player.width / 2 < this.scale.width)) {
         this.player.x += 4;
       }
     }
