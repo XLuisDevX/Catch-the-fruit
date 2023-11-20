@@ -35,6 +35,8 @@ export default class PreloadScene extends Phaser.Scene {
 
   preload() {
     this.loadFont("retroGaming", "assets/fonts/RetroGaming.ttf");
+    this.load.image("spain", "assets/images/spain.png")
+    this.load.image("england", "assets/images/england.png")
     this.load.image("background", "assets/images/background.jpg");
     this.load.image("box", "assets/images/box.png");
     this.load.image("apple", "assets/images/apple.png")
@@ -43,8 +45,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("orange", "assets/images/orange.png")
     this.load.image("pineapple", "assets/images/pineapple.png")
     this.load.image("lemon", "assets/images/lemon.png")
-    this.load.image("es-ES", "assets/images/england.png")
-    this.load.image("en-EN", "assets/images/spain.png")
+    
 
     this.load.json('lang', 'assets/langs/lang.json')
     this.load.json('gameConfig', 'data/gameData.json')

@@ -131,7 +131,12 @@ export default class MainMenu extends Phaser.Scene {
   }
 
   getCurrentLangFlag(): string {
-    return this.cache.json.get('gameConfig').currentLang
+    if(this.cache.json.get('gameConfig').currentLang === 'es-ES') {
+      return 'spain'
+    } else if (this.cache.json.get('gameConfig').currentLang === 'en-EN') {
+      return 'england'
+    }
+    return ''
   }
 
   getLanguage(): string {
