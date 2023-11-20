@@ -43,8 +43,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("orange", "assets/images/orange.png")
     this.load.image("pineapple", "assets/images/pineapple.png")
     this.load.image("lemon", "assets/images/lemon.png")
-    this.load.image("es-ES", "assets/images/es-ES.png")
-    this.load.image("en-EN", "assets/images/en-EN.png")
+    this.load.image("es-ES", "assets/images/england.png")
+    this.load.image("en-EN", "assets/images/spain.png")
 
     this.load.json('lang', 'assets/langs/lang.json')
     this.load.json('gameConfig', 'data/gameData.json')
